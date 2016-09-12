@@ -19,9 +19,8 @@
 		<c:if test="${ not empty products.getList() }">
 			<select name="prod">
 				<c:forEach items="${ products.getList() }" var="item">
-					<option>
-						<c:out value="${ item.getProductName() }"></c:out> &nbsp;&nbsp;&nbsp;
-						<c:out value="${ item.getProductPrice() }"></c:out>
+					<option value="${ item }">
+						<c:out value="${ item.getProductName() }, ${ item.getProductPrice() }"></c:out>
 					</option>
 				</c:forEach>
 			</select>

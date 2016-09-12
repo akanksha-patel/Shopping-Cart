@@ -41,8 +41,8 @@ public class ViewCartController extends HttpServlet {
 			out.println("<tr>"
 					+ "<td>"+item.getProductName() + 
 							 "</tr>");
-			sum += sum + item.getProductPrice();
-			System.out.println(item.getProductPrice());
+			sum=sum+item.getProductPrice();
+			
 		}
 		out.println("<tr><td>Total Price: <span class='red'>" + sum + " INR</span></td></tr>" );
 		out.println("<tr><td><input type='submit' value='ADD MORE ITEMS'></td></tr>");

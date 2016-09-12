@@ -5,6 +5,11 @@ public class Product {
 	double productPrice;
 	
 	@Override
+	public String toString() {
+		return this.productName+","+this.productPrice;
+	}
+	
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

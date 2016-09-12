@@ -30,7 +30,10 @@ public class CartController extends HttpServlet {
 			throws ServletException, IOException {
 		String submit = request.getParameter("submit");
 		String prod = request.getParameter("prod");
-		System.out.println(prod);
+		String [] tokens = prod.split(",");
+		
+		Product product = new Product (tokens[0], Double.parseDouble(tokens[1]));
+		Double price = product.getProductPrice();
 		HttpSession session = request.getSession(false);
 		
 		
@@ -40,11 +43,11 @@ public class CartController extends HttpServlet {
 		
 		if (submit.equals("ADD TO CART")) {
 			if (isCartNull(session)) {
-				initializeCart(prod, session);
+				initializeCart(prod, price, session);
 				response.sendRedirect("ViewCartController");
 				return;
 			} else {
-				addItemToCart(prod, session);
+				addItemToCart(prod,  price, session);
 				response.sendRedirect("ViewCartController");
 				return;
 			}
@@ -52,7 +55,7 @@ public class CartController extends HttpServlet {
 		
 		if (submit.equals("REMOVE FROM CART")) {
 			if (isCartNotEmpty(session)) {
-				removeItemFromCart(prod, session);
+				removeItemFromCart(prod,  price,session);
 				response.sendRedirect("ViewCartController");
 				return;
 			}
@@ -75,22 +78,22 @@ public class CartController extends HttpServlet {
 		return session.getAttribute("cart") == null;
 	}
 
-	private void addItemToCart(String productName,HttpSession session) {
+	private void addItemToCart(String productName,Double productPrice,HttpSession session) {
 		Cart cart = (Cart) session.getAttribute("cart");
-		cart.add(new Product(productName));
+		cart.add(new Product(productName,productPrice));
 		
 	}
 	
-	private void removeItemFromCart(String productName,HttpSession session){
-		Product product = new Product(productName);
+	private void removeItemFromCart(String productName,Double productPrice,HttpSession session){
+		Product product = new Product(productName,productPrice);
 		Cart cart = (Cart) session.getAttribute("cart");
 		cart.remove(product);
 	}
 
-	private void initializeCart(String productName,HttpSession session){
+	private void initializeCart(String productName,Double productPrice,HttpSession session){
 		Cart cart = new Cart ();
 		session.setAttribute("cart", cart);
-		cart.add(new Product(productName));
+		cart.add(new Product(productName,productPrice));
 	
 	}
 
